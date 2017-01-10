@@ -1,0 +1,7 @@
+node_modules/
+test_results.txt
+npm-debug.log
+.*.swp
+._*
+.DS_Store
+.git

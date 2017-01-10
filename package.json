@@ -1,0 +1,49 @@
+{
+  "name": "talentcomposer",
+  "version": "1.0.0",
+  "description": "Composition tool using talents",
+  "main": "./lib/index.js",
+  "files": [
+    "node4-lib",
+    "lib"
+  ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "pretest": "./node_modules/.bin/grunt eslint",
+    "test": "./node_modules/.bin/grunt mochaTest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ottopecz/talentcomposer.git"
+  },
+  "keywords": [
+    "composition",
+    "mixin",
+    "mixins",
+    "mixin composition",
+    "trait",
+    "traits",
+    "trait composition",
+    "talent",
+    "talents",
+    "talent composition"
+  ],
+  "author": "Otto Pecz <otto.pecz@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ottopecz/talentcomposer/issues"
+  },
+  "homepage": "https://github.com/ottopecz/talentcomposer#readme",
+  "devDependencies": {
+    "babel-preset-es2015-node4": "^2.1.1",
+    "chai": "^3.5.0",
+    "eslint": "^3.13.1",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "mocha": "^3.2.0"
+  }
+}
