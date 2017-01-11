@@ -1,5 +1,4 @@
 const {expect} = require("chai");
-const Talent = require("../lib/Talent");
 const Composer = require("../lib/index");
 
 describe("The index", () => {
@@ -19,30 +18,22 @@ describe("The \"Composer\" namespace", () => {
 
 describe("The \"compose\" method", () => {
 
-  describe("when any of the parameters is primitive", () => {
+  describe("when any of the parameters is primitive or a class", () => {
 
     it("should throw an error", () => {
 
-      expect(() => Composer.compose(function fn() {})).to.throw(TypeError, "The parameter should not be a primitive or a function");
-      expect(() => Composer.compose(Symbol())).to.throw(TypeError, "The parameter should not be a primitive or a function");
-      expect(() => Composer.compose(true)).to.throw(TypeError, "The parameter should not be a primitive or a function");
-      expect(() => Composer.compose("str")).to.throw(TypeError, "The parameter should not be a primitive or a function");
-      expect(() => Composer.compose(5)).to.throw(TypeError, "The parameter should not be a primitive or a function");
-    });
-  });
-
-  describe("when any of the parameters, but the first, is not a talent", () => {
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose({}, {})).to.throw(TypeError, "Every parameter should be a talent but the first one");
+      expect(() => Composer.compose(Symbol())).to.throw(TypeError, "The parameter should not be a primitive or a class");
+      expect(() => Composer.compose(true)).to.throw(TypeError, "The parameter should not be a primitive or a class");
+      expect(() => Composer.compose("str")).to.throw(TypeError, "The parameter should not be a primitive or a class");
+      expect(() => Composer.compose(5)).to.throw(TypeError, "The parameter should not be a primitive or a class");
+      expect(() => Composer.compose(class C {})).to.throw(TypeError, "The parameter should not be a primitive or a class");
     });
   });
 
   describe("when the composition is asymmetric", () => {
 
     const instance = {[Symbol("This is an")]: "instance"};
-    let talent = new Talent();
+    function talent() {}
 
     it("should should not throw an error", () => {
 
@@ -58,33 +49,51 @@ describe("The \"compose\" method", () => {
 
     it("should compose the instance with the talent", () => {
 
-      talent = new Talent({
-        talentMethod() {}
-      });
-
       const composed = Composer.compose(instance, talent);
 
-      expect(composed).to.have.a.property("talentMethod").that.is.a.function;
+      expect(composed).to.have.a.property("talent").that.is.a.function;
     });
   });
 
   describe("when the composition is symmetric", () => {
 
-    const talent1 = new Talent();
-    const talent2 = new Talent();
+    function talent1() {}
+    function talent2() {}
 
     it("should should not throw an error", () => {
 
       expect(() => Composer.compose(talent1, talent2)).to.not.throw();
     });
 
-    it("should return an new talent if talents are composed", () => {
+    it("should return an new talent", () => {
 
       const composed = Composer.compose(talent1, talent2);
 
       expect(composed).to.not.equal(talent1);
       expect(composed).to.not.equal(talent2);
-      expect(composed).to.be.an.instanceOf(Talent);
+      expect(composed).to.be.have.a.property("talent1").that.is.a.function;
+      expect(composed).to.be.have.a.property("talent2").that.is.a.function;
+    });
+  });
+
+  describe.only("when talents are nested (already composed)", () => {
+
+    const instance = {[Symbol("This is an")]: "instance"};
+    const composedTalents1 = {
+      talent1() {},
+      "composedTalents2": {
+        talent2() {},
+        talent3() {}
+      }
+    };
+
+    it("should flatten the composed object", () => {
+
+      const composed = Composer.compose(instance, composedTalents1);
+
+      expect(composed).to.be.have.a.property("talent1").that.is.a.function;
+      expect(composed).to.be.have.a.property("talent2").that.is.a.function;
+      expect(composed).to.be.have.a.property("talent3").that.is.a.function;
     });
   });
 });
