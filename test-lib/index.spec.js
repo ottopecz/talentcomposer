@@ -46,6 +46,7 @@ describe("The \"compose\" method", () => {
   describe("when the composition is asymmetric", () => {
 
     const instance = {[Symbol("This is an")]: "instance"};
+
     function talent() {}
 
     it("should should not throw an error", () => {
@@ -111,15 +112,14 @@ describe("The \"compose\" method", () => {
   });
 
   describe("when a required member was not composed with (simple case)", () => {
+    const instance = {"required": Composer.required};
 
-      const instance = {"required": Composer.required};
+    function notTheRequired() {}
 
-      function notTheRequired() {}
+    it("should throw an error", () => {
 
-      it("should throw an error", () => {
-
-        expect(() => Composer.compose(instance, notTheRequired)).to.throw(Error, "The member \"required\" is required to be implemented");
-      });
+      expect(() => Composer.compose(instance, notTheRequired)).to.throw(Error, "The member \"required\" is required to be implemented");
+    });
   });
 
   describe("when a required member was composed with (simple case)", () => {
