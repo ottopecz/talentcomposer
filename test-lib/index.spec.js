@@ -16,6 +16,19 @@ describe("The \"Composer\" namespace", () => {
   });
 });
 
+describe("The \"required\" property", () => {
+
+  it("should be a unique symbol primitive", () => {
+
+    expect(typeof Composer.required).to.equal("symbol");
+  });
+
+  it("should have a description of \"required member\"", () => {
+
+    expect(Composer.required.toString()).to.include("required member");
+  });
+});
+
 describe("The \"compose\" method", () => {
 
   describe("when any of the parameters is primitive or a class", () => {
@@ -76,7 +89,7 @@ describe("The \"compose\" method", () => {
     });
   });
 
-  describe.only("when talents are nested (already composed)", () => {
+  describe("when talents are nested (already composed)", () => {
 
     const instance = {[Symbol("This is an")]: "instance"};
     const composedTalents1 = {
@@ -94,6 +107,52 @@ describe("The \"compose\" method", () => {
       expect(composed).to.be.have.a.property("talent1").that.is.a.function;
       expect(composed).to.be.have.a.property("talent2").that.is.a.function;
       expect(composed).to.be.have.a.property("talent3").that.is.a.function;
+    });
+  });
+
+  describe("when a required member was not composed with (simple case)", () => {
+
+      const instance = {"required": Composer.required};
+
+      function notTheRequired() {}
+
+      it("should throw an error", () => {
+
+        expect(() => Composer.compose(instance, notTheRequired)).to.throw(Error, "The member \"required\" is required to be implemented");
+      });
+  });
+
+  describe("when a required member was composed with (simple case)", () => {
+
+    const instance = {"required": Composer.required};
+
+    function required() {}
+
+    it("should throw an error", () => {
+
+      expect(() => Composer.compose(instance, required)).to.not.throw();
+    });
+  });
+
+  describe("when a required member was not composed with (nested case)", () => {
+
+    const instance = {"required": Composer.required};
+    const composedTalents = {notTheRequired() {}, foo() {}};
+
+    it("should throw an error", () => {
+
+      expect(() => Composer.compose(instance, composedTalents)).to.throw(Error, "The member \"required\" is required to be implemented");
+    });
+  });
+
+  describe("when a required member was composed with (nested case)", () => {
+
+    const instance = {"required": Composer.required};
+    const composedTalents = {required() {}, foo() {}};
+
+    it("should throw an error", () => {
+
+      expect(() => Composer.compose(instance, composedTalents)).to.not.throw();
     });
   });
 });
