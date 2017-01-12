@@ -41,121 +41,66 @@ describe("The \"createTalent\" method", () => {
   });
 });
 
-describe("The \"compose\" method", () => {
+describe.only("The \"composeTalents\" method", () => {
 
-  describe("when any of the parameters is primitive or a class", () => {
+  it("should throw an type error if the one the arguments are not a talent", () => {
 
-    it("should throw an error", () => {
+    const talent = {"it's not": "a talent"};
 
-      expect(() => Composer.compose(Symbol())).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-      expect(() => Composer.compose(true)).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-      expect(() => Composer.compose("str")).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-      expect(() => Composer.compose(5)).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-      expect(() => Composer.compose(function fn() {})).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-      expect(() => Composer.compose(class C {})).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
-    });
+    expect(() => Composer.composeTalents(talent)).to.throw(TypeError, "Parameter [object Object] is not a talent");
   });
 
-  describe("when the first parameter is a talent", () => {
+  it("should return a new talent which is composed using the source talents", () => {
 
-    it("should throw an error", () => {
+    const talent1 = Composer.createTalent({method1() {}});
+    const talent2 = Composer.createTalent({method2() {}});
+    const composedTalent = Composer.composeTalents(talent1, talent2);
 
-      expect(() => Composer.compose(Composer.createTalent({method() {}}))).to.throw(TypeError, "The first argument has to be an instance or an object");
-    });
+    expect(composedTalent).to.have.a.property("method1", talent1.method1);
+    expect(composedTalent).to.have.a.property("method2", talent2.method2);
   });
 
-  describe("when it's called with an instance and at least one talent", () => {
+  it("should resolve required values in a non linear way", () => {
 
-    const instance = {[Symbol("This is an")]: "instance"};
+    const talent1 = Composer.createTalent({method() {}});
+    const talent2 = Composer.createTalent({"method": Composer.required});
 
-    it("should return the instance itself", () => {
-
-      const talent = Composer.createTalent({});
-      const composed = Composer.compose(instance, talent);
-
-      expect(composed).to.deep.equal(instance);
-    });
-
-    it("should compose the instance with the talent", () => {
-
-      const talent = Composer.createTalent({method() {}});
-      const composed = Composer.compose(instance, talent);
-
-      expect(composed).to.have.a.property("method").that.is.a.function;
-    });
+    expect(Composer.composeTalents(talent1, talent2)).to.have.a.property("method", talent1.method);
   });
 
-  describe.only("when talents are nested", () => {
+  it("should throw an error if a required member remains unimplemented", () => {
 
-    const instance = {[Symbol("This is an")]: "instance"};
+    const talent1 = Composer.createTalent({"method": Composer.required});
+    const talent2 = Composer.createTalent({"method": Composer.required});
+
+    expect(() => Composer.composeTalents(talent1, talent2).to.throw("Error", `The required member "method" remained unimplemented`));
+  });
+
+  it("should flatten talents", () => {
+
     const talent1 = Composer.createTalent({
       method1() {},
       "talent2": Composer.createTalent({method2() {}})
     });
+    const composedTalent = Composer.composeTalents(talent1);
 
-    it("should flatten the composed object", () => {
-
-      const composed = Composer.compose(instance, talent1);
-
-      expect(composed).to.be.have.a.property("method1").that.is.a.function;
-      expect(composed).to.be.have.a.property("method2").that.is.a.function;
-    });
-  });
-
-  describe("when a required member was not composed with (simple case)", () => {
-    const instance = {"required": Composer.required};
-
-    function notTheRequired() {}
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose(instance, notTheRequired)).to.throw(Error, "The member \"required\" is required to be implemented");
-    });
-  });
-
-  describe("when a required member was composed with (simple case)", () => {
-
-    const instance = {"required": Composer.required};
-
-    function required() {}
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose(instance, required)).to.not.throw();
-    });
-  });
-
-  describe("when a required member was not composed with (nested case)", () => {
-
-    const instance = {"required": Composer.required};
-    const composedTalents = {notTheRequired() {}, foo() {}};
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose(instance, composedTalents)).to.throw(Error, "The member \"required\" is required to be implemented");
-    });
-  });
-
-  describe("when a required member was composed with (nested case)", () => {
-
-    const instance = {"required": Composer.required};
-    const composedTalents = {required() {}, foo() {}};
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose(instance, composedTalents)).to.not.throw();
-    });
-  });
-
-  describe("when a required member was composed with but the member is required later too (non linearity)", () => {
-
-    const instance = {"required": Composer.required};
-    const composedTalents1 = {required() {}, foo() {}};
-    const composedTalents2 = {"required": Composer.required, foo() {}};
-
-    it("should throw an error", () => {
-
-      expect(() => Composer.compose(instance, composedTalents1, composedTalents2)).to.not.throw();
-    });
+    expect(composedTalent).to.have.a.property("method1", talent1.method1);
+    expect(composedTalent).to.have.a.property("method2", talent1.talent2.method2);
   });
 });
+
+// describe("The \"compose\" method", () => {
+//
+//   describe("when any of the parameters is primitive or a class", () => {
+//
+//     it("should throw an error", () => {
+//
+//       expect(() => Composer.compose(Symbol())).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//       expect(() => Composer.compose(true)).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//       expect(() => Composer.compose("str")).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//       expect(() => Composer.compose(5)).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//       expect(() => Composer.compose(function fn() {})).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//       expect(() => Composer.compose(class C {})).to.throw(TypeError, "The parameter should not be a primitive, a function or a class");
+//     });
+//   });
+// });
