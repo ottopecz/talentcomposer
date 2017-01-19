@@ -196,12 +196,12 @@ Composes talents with an instantiated object
 
 Composes talents into one
 
-### alias(talent: Talent, methodName, string, alias: string): Talent
+### alias(talent: Talent, methodName: string, alias: string): Talent
 
 Aliases a method of the talent
 (It doesn't mutate the talent but returns a new one)
 
-### exclude(talent: Talent, methodName, string): Talent
+### exclude(talent: Talent, methodName: string): Talent
 
 Excludes a method of the talent
 (It doesn't mutate the talent but returns a new one)
