@@ -6,9 +6,10 @@ The **talentcomposer** is a tool which can compose pieces of capabilities (talen
 
 ## Notes
 
+1. The package [mainliner](https://www.npmjs.com/package/mainliner) utilizes this package.
 1. Conflict resolution between talents is explicit. The programmer has to resolve conflicts using either the alias or the exclude method. See below in the examples
 2. Conflict resolution between an instance and talents is implicit. The member will delegated on to the instance blindly. If there is already a member on the instance with same name it's gonna be shadowed or overridden.
-3. Although the publication allowes stateful talents I would **NOT** not recommend to use them with this tool. Like **DON'T DO THIS**
+3. Although the publication allows stateful talents I would **NOT** not recommend to use them with this tool. Like **DON'T** do this (It's leaking anyway)
 
 ```javascript
 const Composer = require("talentcomposer");
@@ -36,16 +37,16 @@ class Person {
   constructor(name) {
     this.name = name;
   }
-  eat() {}
-  sleep() {}
+  eating() {}
+  sleeping() {}
 }
 
 const studentTalent = Composer.createTalent({
-  study() {}
+  studying() {}
 });
 
 const teacherTalent = Composer.createTalent({
-  teach() {}
+  teaching() {}
 });
 
 const sportTalent = Composer.createTalent({
@@ -58,9 +59,9 @@ let mavis = new Person("Mavis");
 travis = Composer.composeWithTalents(travis, studentTalent, sportTalent);
 mavis = Composer.composeWithTalents(mavis, teacherTalent, sportTalent);
 
-assert.ok(travis.study);
+assert.ok(travis.studying);
 assert.ok(travis.swimming);
-assert.ok(mavis.teach);
+assert.ok(mavis.teaching);
 assert.ok(mavis.swimming);
 ```
 
@@ -102,8 +103,8 @@ class Person {
   constructor(name) {
     this.name = name;
   }
-  eat() {}
-  sleep() {}
+  eating() {}
+  sleeping() {}
 }
 
 const courierTalent = Composer.createTalent({
@@ -138,10 +139,13 @@ const courierTalent = Composer.createTalent({
 });
 
 const sportTalent = Composer.createTalent({
-  cycling() {console.log("like a athlete");}
+  cycling() {console.log("like an athlete");}
 });
 
-combinedTalents = Composer.composeTalents(courierTalent, Composer.alias(sportTalent, "cycling", "riding"));
+combinedTalents = Composer.composeTalents(
+    courierTalent,
+    Composer.alias(sportTalent, "cycling", "riding")
+);
 
 assert.ok(combinedTalents.cycling);
 assert.deepEqual(combinedTalents.cycling, courierTalent.cycling);
@@ -165,7 +169,10 @@ const sportTalent = Composer.createTalent({
   swimming() {}
 });
 
-combinedTalents = Composer.composeTalents(courierTalent, Composer.exclude(sportTalent, "cycling"));
+combinedTalents = Composer.composeTalents(
+    courierTalent,
+    Composer.exclude(sportTalent, "cycling")
+);
 
 assert.ok(combinedTalents.cycling);
 assert.deepEqual(combinedTalents.cycling, courierTalent.cycling);
@@ -188,6 +195,16 @@ Composes talents with an instantiated object
 ### composeTalents(...talents: Talent[]): Talent
 
 Composes talents into one
+
+### alias(talent: Talent, methodName, string, alias: string): Talent
+
+Aliases a method of the talent
+(It doesn't mutate the talent but returns a new one)
+
+### exclude(talent: Talent, methodName, string): Talent
+
+Excludes a method of the talent
+(It doesn't mutate the talent but returns a new one)
 
 ### required: Symbol
 
