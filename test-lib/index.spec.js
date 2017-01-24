@@ -75,14 +75,12 @@ describe("The \"composeTalents\" method", () => {
 
   it("should preserve the unimplemented members", () => {
 
-    const talent1 = Composer.createTalent({"method1": Composer.required});
-    const talent2 = Composer.createTalent({"method1": Composer.required});
-    const talent3 = Composer.createTalent({"method2": Composer.required});
-    const talent4 = Composer.createTalent({"method2": Composer.required});
-    const composedTalent = Composer.composeTalents(talent1, talent2, talent3, talent4);
+    const talent1 = Composer.createTalent({"method": Composer.required});
+    const talent2 = Composer.createTalent({"method": Composer.required});
+    const talent3 = Composer.createTalent({"method": Composer.required});
+    const composedTalent = Composer.composeTalents(talent1, talent2, talent3);
 
-    expect(composedTalent).to.have.property("method1", Composer.required);
-    expect(composedTalent).to.have.property("method2", Composer.required);
+    expect(composedTalent).to.have.property("method", Composer.required);
   });
 
   it("should throw an error on unresolved conflicts", () => {

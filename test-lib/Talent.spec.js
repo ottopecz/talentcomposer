@@ -18,6 +18,28 @@ describe("The Talent class", () => {
       expect(expectedDesc).to.deep.equal(actualDesc);
     });
   });
+
+  describe("when it's instantiated with a talent", () => {
+
+    const record = {
+      "foo": "bar",
+      "req": Talent.required
+    };
+    const talent1 = new Talent(record);
+    const talent2 = new Talent(talent1);
+
+    it("it should copy the talent", () => {
+
+      expect(talent2).to.have.a.property("foo", "bar");
+
+      const expectedDesc = Reflect.getOwnPropertyDescriptor(record, "foo");
+      const actualDesc = Reflect.getOwnPropertyDescriptor(talent2, "foo");
+
+      expect(expectedDesc).to.deep.equal(actualDesc);
+      expect(talent2.req).to.equal(talent1.req);
+      expect(talent2.req).to.equal(record.req);
+    });
+  });
 });
 
 describe("The \"addProperty\" static method of the Talent class", () => {
@@ -50,6 +72,29 @@ describe("The \"removeProperty\" static method of the Talent class", () => {
 
       expect(newTalent).to.be.an.instanceOf(Talent);
       expect(newTalent).to.not.have.a.property("foo");
+    });
+  });
+});
+
+describe("The \"typeCheck\" static method of the Talent class", () => {
+
+  describe("when it's executed with a talent instance", () => {
+
+    const talent = new Talent({"foo": "bar"});
+
+    it("it should return true", () => {
+
+      expect(Talent.typeCheck(talent)).to.be.true;
+    });
+  });
+
+  describe("when it's executed with a non-talent", () => {
+
+    const nonTalent = {"foo": "bar"};
+
+    it("it should return false", () => {
+
+      expect(Talent.typeCheck(nonTalent)).to.be.false;
     });
   });
 });
