@@ -11,3 +11,6 @@
 
 ##v1.0.4 (23/01/2017)
 **Making possible to use talents which were created by an other installment of the package.**
+
+##v1.0.5 (24/01/2017)
+**Going back to proper type check for talents. If using a talent created by an other installment of the package is necessary I recommend to recreate the talent using the Talent constructor. Like: `const copiedTalent = new Talent(talent)`**
