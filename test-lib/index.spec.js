@@ -187,6 +187,24 @@ describe("The \"composeWithTalents\" method", () => {
     });
   });
 
+  describe("when prototype of the instance has a member required which is unresolved by talent", () => {
+
+    it("should throw an error", () => {
+
+      class TestClass {
+        get requiredMember() {
+          return Composer.required;
+        }
+      }
+
+      const instance = new TestClass();
+      const talent = Composer.createTalent({}); // "requiredMember" undefined
+
+      expect(() => Composer.composeWithTalents(instance, talent))
+        .to.throw(Error, "Member \"requiredMember\" remained unimplemented");
+    });
+  });
+
   describe("when the instance and the talent has the same member required and the member is unresolved", () => {
 
     it("should throw an error", () => {
