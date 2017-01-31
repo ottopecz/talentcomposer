@@ -128,6 +128,62 @@ assert.ok(travis.delivering);
 assert.deepEqual(travis.delivering, courierTalent.delivering);
 ```
 
+### Require an unimplemented capability on the prototype of a class
+
+```javascript
+const assert = require("assert");
+const Composer = require("talentcomposer");
+
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  get drawing() {
+    return Composer.required;
+  }
+  eating() {}
+  sleeping() {}
+}
+
+const artTalent = Composer.createTalent({
+  drawing() {}
+});
+
+let travis = new Person("Travis");
+
+travis = Composer.composeWithTalents(travis, artTalent);
+
+assert.ok(travis.drawing);
+assert.deepEqual(travis.drawing, artTalent.drawing);
+```
+
+### Require an unimplemented capability in the constructor of a class
+
+```javascript
+const assert = require("assert");
+const Composer = require("talentcomposer");
+
+class Person {
+  constructor(name) {
+    this.name = name;
+    this.painting = Composer.required;
+  }
+  eating() {}
+  sleeping() {}
+}
+
+const artTalent = Composer.createTalent({
+  painting() {}
+});
+
+let travis = new Person("Travis");
+
+travis = Composer.composeWithTalents(travis, artTalent);
+
+assert.ok(travis.painting);
+assert.deepEqual(travis.painting, artTalent.painting);
+```
+
 ### Explicit conflict resolution (aliasing)
 
 ```javascript
