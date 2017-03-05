@@ -1,6 +1,6 @@
 {
   "name": "talentcomposer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Composition tool using talents",
   "main": "./lib/index.js",
   "files": [
