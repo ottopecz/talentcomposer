@@ -17,3 +17,6 @@
 
 ##v1.1.0 (31/01/2017)
 **Making possible to declare a required member on the prototype of a class**
+
+##v1.1.1 (05/03/2017)
+**Refactoring for better encapsulation**
