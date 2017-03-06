@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-eslint");
   grunt.loadNpmTasks("grunt-babel");
+  grunt.loadNpmTasks("grunt-contrib-clean");
 
   grunt.initConfig({
     "mochaTest": {
@@ -34,8 +35,11 @@ module.exports = function(grunt) {
           "ext": ".js"
         }]
       }
-    }
+    },
+    "clean": [
+      "node4-lib"
+    ]
   });
 
-  grunt.registerTask("default", ["eslint", "babel", "mochaTest"]);
+  grunt.registerTask("default", ["clean", "eslint", "babel", "mochaTest"]);
 };
