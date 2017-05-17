@@ -20,3 +20,6 @@
 
 ##v1.1.1 (05/03/2017)
 **Refactoring for better encapsulation**
+
+##v2.0.0 (17/05/2017)
+**Removing node4 build and adding basic jsdoc**
