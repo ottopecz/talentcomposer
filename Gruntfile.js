@@ -21,25 +21,10 @@ module.exports = function(grunt) {
     "eslint": {
       "target": ["lib/**/*.js", "test-lib/**/*.spec.js"]
     },
-    "babel": {
-      "options": {
-        "sourceMap": "inline",
-        "presets": [["env", {"targets": {"node": 4}}]]
-      },
-      "dist": {
-        "files": [{
-          "expand": true,
-          "cwd": "lib/",
-          "src": ["**/*.js"],
-          "dest": "node4-lib/",
-          "ext": ".js"
-        }]
-      }
-    },
     "clean": [
       "node4-lib"
     ]
   });
 
-  grunt.registerTask("default", ["clean", "eslint", "babel", "mochaTest"]);
+  grunt.registerTask("default", ["clean", "eslint", "mochaTest"]);
 };
