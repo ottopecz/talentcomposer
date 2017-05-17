@@ -1,15 +1,5 @@
 const {expect} = require("chai");
-const {removeWhere, findWhere, findWhereKey} = require("../lib/util");
-
-describe("The \"removeWhere\" function", () => {
-
-  it("should return a new array where those objects are excluded where the given key value pair is present", () => {
-
-    const arr = [{"foo": "bar"}, {"foo": "notBar"}, {"notFoo": "notBar"}, {"foo": "bar"}];
-
-    expect(removeWhere(arr, "foo", "bar")).deep.equal([{"foo": "notBar"}, {"notFoo": "notBar"}]);
-  });
-});
+const {findWhere, findWhereKey} = require("../lib/util");
 
 describe("The \"findWhere\" function", () => {
 
