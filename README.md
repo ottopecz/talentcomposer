@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ottopecz/talentcomposer.svg?branch=master)](https://travis-ci.org/ottopecz/talentcomposer)
+
 [![NPM](https://nodei.co/npm/talentcomposer.png?downloads=true)](https://www.npmjs.com/package/talentcomposer/)
 
 # talentcomposer
