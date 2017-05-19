@@ -23,3 +23,6 @@
 
 ##v2.0.0 (17/05/2017)
 **Removing node4 build and adding basic jsdoc**
+
+##v2.0.1 (19/05/2017)
+**Adding dependency badges**
