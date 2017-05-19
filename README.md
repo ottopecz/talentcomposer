@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ottopecz/talentcomposer.svg?branch=master)](https://travis-ci.org/ottopecz/talentcomposer)
+[![Build Status](https://travis-ci.org/ottopecz/talentcomposer.svg?branch=master)](https://travis-ci.org/ottopecz/talentcomposer)[![Dependency status](https://david-dm.org/ottopecz/talentcomposer/status.svg)](https://david-dm.org/ottopecz/talentcomposer#info=dependencies) [![devDependency Status](https://david-dm.org/ottopecz/talentcomposer/dev-status.svg)](https://david-dm.org/ottopecz/talentcomposer#info=devDependencies)
 
 [![NPM](https://nodei.co/npm/talentcomposer.png?downloads=true)](https://www.npmjs.com/package/talentcomposer/)
 
