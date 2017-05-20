@@ -3,4 +3,5 @@ node_js:
   - "6"
 script:
   - ./node_modules/.bin/grunt eslint
-  - ./node_modules/.bin/grunt mochaTest
+  - ./node_modules/.bin/grunt shell:lab
+  - ./node_modules/.bin/grunt coveralls:target

@@ -1,5 +1,8 @@
-const {expect} = require("chai");
+const {expect} = require("code");
+const Lab = require("lab");
 const Talent = require("../lib/Talent");
+
+const {describe, it} = exports.lab = Lab.script();
 
 describe("The Talent class", () => {
 
@@ -8,14 +11,15 @@ describe("The Talent class", () => {
     const record = {"foo": "bar"};
     const talent = new Talent(record);
 
-    it("it should create the record entries on the instance", () => {
+    it("it should create the record entries on the instance", done => {
 
-      expect(talent).to.have.a.property("foo", "bar");
+      expect(talent).to.include({"foo": "bar"});
 
       const expectedDesc = Reflect.getOwnPropertyDescriptor(record, "foo");
       const actualDesc = Reflect.getOwnPropertyDescriptor(talent, "foo");
 
-      expect(expectedDesc).to.deep.equal(actualDesc);
+      expect(expectedDesc).to.equal(actualDesc);
+      done();
     });
   });
 
@@ -28,16 +32,17 @@ describe("The Talent class", () => {
     const talent1 = new Talent(record);
     const talent2 = new Talent(talent1);
 
-    it("it should copy the talent", () => {
+    it("it should copy the talent", done => {
 
-      expect(talent2).to.have.a.property("foo", "bar");
+      expect(talent2).to.include({"foo": "bar"});
 
       const expectedDesc = Reflect.getOwnPropertyDescriptor(record, "foo");
       const actualDesc = Reflect.getOwnPropertyDescriptor(talent2, "foo");
 
-      expect(expectedDesc).to.deep.equal(actualDesc);
+      expect(expectedDesc).to.equal(actualDesc);
       expect(talent2.req).to.equal(talent1.req);
       expect(talent2.req).to.equal(record.req);
+      done();
     });
   });
 });
@@ -49,12 +54,13 @@ describe("The \"addProperty\" static method of the Talent class", () => {
     const talent = new Talent({});
     const keyValue = {"foo": "bar"};
 
-    it("it should return with a new talent which is the copy of the old one plus the new property", () => {
+    it("it should return with a new talent which is the copy of the old one plus the new property", done => {
 
       const newTalent = Talent.addProperty(talent, keyValue);
 
       expect(newTalent).to.be.an.instanceOf(Talent);
-      expect(newTalent).to.have.a.property("foo", "bar");
+      expect(newTalent).to.include({"foo": "bar"});
+      done();
     });
   });
 });
@@ -66,12 +72,13 @@ describe("The \"removeProperty\" static method of the Talent class", () => {
     const talent = new Talent({"foo": "bar"});
     const key = "foo";
 
-    it("it should return with a new talent which is the copy of the old one minus the property", () => {
+    it("it should return with a new talent which is the copy of the old one minus the property", done => {
 
       const newTalent = Talent.removeProperty(talent, key);
 
       expect(newTalent).to.be.an.instanceOf(Talent);
-      expect(newTalent).to.not.have.a.property("foo");
+      expect(newTalent).to.not.include("foo");
+      done();
     });
   });
 });
@@ -82,9 +89,10 @@ describe("The \"typeCheck\" static method of the Talent class", () => {
 
     const talent = new Talent({"foo": "bar"});
 
-    it("it should return true", () => {
+    it("it should return true", done => {
 
-      expect(Talent.typeCheck(talent)).to.be.true;
+      expect(Talent.typeCheck(talent)).to.be.true();
+      done();
     });
   });
 
@@ -92,9 +100,10 @@ describe("The \"typeCheck\" static method of the Talent class", () => {
 
     const nonTalent = {"foo": "bar"};
 
-    it("it should return false", () => {
+    it("it should return false", done => {
 
-      expect(Talent.typeCheck(nonTalent)).to.be.false;
+      expect(Talent.typeCheck(nonTalent)).to.be.false();
+      done();
     });
   });
 });
