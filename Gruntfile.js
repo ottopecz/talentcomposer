@@ -1,28 +1,23 @@
 module.exports = function(grunt) {
 
-  grunt.loadNpmTasks("grunt-mocha-test");
-  grunt.loadNpmTasks("grunt-eslint");
+  require("load-grunt-tasks")(grunt);
 
   grunt.initConfig({
-    "mochaTest": {
-      "test": {
-        "options": {
-          "reporter": "spec",
-          "captureFile": "test_results.txt",
-          "quiet": false,
-          "clearRequireCache": true,
-          "noFail": false
-        },
-        "src": ["test-lib/**/*.spec.js"]
-      }
-    },
     "eslint": {
       "target": ["lib/**/*.js", "test-lib/**/*.spec.js"]
     },
-    "clean": [
-      "node4-lib"
-    ]
+    "shell": {
+      "lab": {
+        "command": "./node_modules/.bin/lab -I regeneratorRuntime,Observable,__core-js_shared__,core,System," +
+        "_babelPolyfill,asap -S -r console -m 4000 -o stdout -r lcov -o coverage.info 'test-lib'"
+      }
+    },
+    "coveralls": {
+      "target": {
+        "src": "coverage.info"
+      }
+    }
   });
 
-  grunt.registerTask("default", ["eslint", "mochaTest"]);
+  grunt.registerTask("default", ["eslint", "shell:lab"]);
 };

@@ -1,7 +1,5 @@
-node_modules/
 test-lib/
 .gitignore
 .eslintrc
 .travis.yml
 Gruntfile.js
-test_results.txt
