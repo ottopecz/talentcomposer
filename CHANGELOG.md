@@ -26,3 +26,6 @@
 
 ##v2.0.1 (19/05/2017)
 **Adding dependency badges**
+
+##v2.0.2 (20/05/2017)
+**Adding test coverage badge**
