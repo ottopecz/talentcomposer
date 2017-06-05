@@ -29,3 +29,6 @@
 
 ##v2.0.2 (20/05/2017)
 **Adding test coverage badge**
+
+##v2.0.3 (05/06/2017)
+**Upgrading packages** To clear up badges
