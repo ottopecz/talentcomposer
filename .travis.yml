@@ -1,3 +1,4 @@
+os: windows10
 language: node_js
 node_js:
   - "6"
