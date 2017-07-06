@@ -32,3 +32,6 @@
 
 ##v2.0.3 (05/06/2017)
 **Upgrading packages** To clear up badges
+
+##v2.0.4 (06/07/2017)
+**Upgrading packages** To clear up badges
