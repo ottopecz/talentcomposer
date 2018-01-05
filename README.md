@@ -4,7 +4,11 @@
 
 # talentcomposer
 
-The **talentcomposer** is a tool which can compose pieces of capabilities (talents) with each other and also talents with an instance. This tool can help you to do [role oriented programming](https://en.wikipedia.org/wiki/Role-oriented_programming). The implementation is based on the [publication](http://scg.unibe.ch/archive/papers/Ress12eTalentsSPE.pdf) of the Software Composition Group part of the Institute of Computer Science (INF) at the University of Berne
+The **talentcomposer** is a tool which can compose pieces of capabilities (talents) with each other and also talents with an instance. This tool can help you to do [role oriented programming](https://en.wikipedia.org/wiki/Role-oriented_programming). The implementation is based on the [publication](http://scg.unibe.ch/archive/papers/Ress12eTalentsSPE.pdf) of the Software Composition Group part of the Institute of Computer Science (INF) at the University of Bern
+
+##Supported engines
+
+node v6 and v8
 
 ## Notes
 
