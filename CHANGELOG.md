@@ -38,3 +38,6 @@
 
 ##v2.0.5 (05/01/2018)
 **Building on node v8** Making sure that talentcomposer is good with node v8. Also upgrading packages, minor changes and fixes.
+
+##v2.0.6 (17/06/2018)
+**Upgrading packages** To clear up badges
