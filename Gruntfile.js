@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     "shell": {
       "lab": {
         "command": "./node_modules/.bin/lab -I regeneratorRuntime,Observable,__core-js_shared__,core,System," +
-        "_babelPolyfill,asap -S -r console -m 4000 -o stdout -r lcov -o coverage.info 'test-lib'"
+        "_babelPolyfill,asap -S -r console -m 4000 -o stdout -r lcov -o coverage.info -c --coverage-path lib 'test-lib'"
       }
     },
     "coveralls": {

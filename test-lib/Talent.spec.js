@@ -22,7 +22,24 @@ describe("The Talent class", () => {
     });
   });
 
-  describe("when it's instantiated with a talent", () => {
+  describe("when it's instantiated with a record which has a symbol property", () => {
+
+    const sym = Symbol("a symbol property");
+    const record = {sym};
+    const talent = new Talent(record);
+
+    it("it should create the record entries on the instance", () => {
+
+      expect(talent).to.include({sym});
+
+      const expectedDesc = Reflect.getOwnPropertyDescriptor(record, "sym");
+      const actualDesc = Reflect.getOwnPropertyDescriptor(talent, "sym");
+
+      expect(expectedDesc).to.equal(actualDesc);
+    });
+  });
+
+  describe("when it's instantiated with a talent which has a required property", () => {
 
     const record = {
       "foo": "bar",
@@ -41,6 +58,24 @@ describe("The Talent class", () => {
       expect(expectedDesc).to.equal(actualDesc);
       expect(talent2.req).to.equal(talent1.req);
       expect(talent2.req).to.equal(record.req);
+    });
+  });
+
+  describe("when it's instantiated with a talent which has a plain symbol property", () => {
+
+    const sym = Symbol("a symbol property");
+    const record = {sym};
+    const talent1 = new Talent(record);
+    const talent2 = new Talent(talent1);
+
+    it("it should copy the talent", () => {
+
+      expect(talent2).to.include({sym});
+
+      const expectedDesc = Reflect.getOwnPropertyDescriptor(record, "sym");
+      const actualDesc = Reflect.getOwnPropertyDescriptor(talent2, "sym");
+
+      expect(expectedDesc).to.equal(actualDesc);
     });
   });
 });
