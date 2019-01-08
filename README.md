@@ -8,7 +8,7 @@ The **talentcomposer** is a tool which can compose pieces of capabilities (talen
 
 ##Supported engines
 
-node v6 and v8
+node v8 and v10
 
 ## Notes
 
