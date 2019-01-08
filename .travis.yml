@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "6"
   - "8"
+  - "10"
 script:
   - ./node_modules/.bin/grunt eslint
   - ./node_modules/.bin/grunt shell:lab
