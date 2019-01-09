@@ -44,3 +44,6 @@
 
 ##v2.0.7 (08/01/2019)
 **Upgrading packages** To clear up badges
+
+##v2.0.8 (09/01/2019)
+**Rounding up code coverage** Raising code coverage to 100%
