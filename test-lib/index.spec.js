@@ -161,6 +161,25 @@ describe("The \"composeWithTalents\" method", () => {
     });
   });
 
+  describe("when prototype of the instance has a member required which is resolved by talent", () => {
+
+    it("should resolve the requred method on the prototype with the one from the talent", () => {
+
+      class TestClass {
+        get requiredMember() {
+          return Composer.required;
+        }
+      }
+
+      let instance = new TestClass();
+      const talent = Composer.createTalent({requiredMember() {}});
+
+      instance = Composer.composeWithTalents(instance, talent);
+
+      expect(instance.requiredMember).to.be.a.function();
+    });
+  });
+
   describe("when the talent has a required member which the instance resolves", () => {
 
     it("should compose the instance with the talents", () => {
@@ -191,6 +210,24 @@ describe("The \"composeWithTalents\" method", () => {
 
       const instance = new TestClass();
       const talent = Composer.createTalent({}); // "requiredMember" undefined
+
+      expect(() => Composer.composeWithTalents(instance, talent))
+        .to.throw(Error, "Member \"requiredMember\" remained unimplemented");
+    });
+  });
+
+  describe("when a talent has a member required which is unresolved by the instance", () => {
+
+    it("should throw an error", () => {
+
+      class TestClass {
+        constructor() {
+          //  this.requiredMember is not resolved by the instance
+        }
+      }
+
+      const instance = new TestClass();
+      const talent = Composer.createTalent({"requiredMember": Composer.required}); // "requiredMember" defined but unresolved
 
       expect(() => Composer.composeWithTalents(instance, talent))
         .to.throw(Error, "Member \"requiredMember\" remained unimplemented");
