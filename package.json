@@ -45,5 +45,8 @@
     "grunt-shell": "^3.0.1",
     "lab": "^18.0.1",
     "load-grunt-tasks": "^4.0.0"
+  },
+  "dependencies": {
+    "lodash.clone": "^4.5.0"
   }
 }
