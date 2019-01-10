@@ -47,3 +47,6 @@
 
 ##v2.0.8 (09/01/2019)
 **Rounding up code coverage** Raising code coverage to 100%
+
+##v2.0.9 (10/01/2019)
+**Improving code quality** Removing side effects and solving a bug with utilities. The bug didn't have direct effect on functionality.
