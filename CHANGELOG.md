@@ -50,3 +50,6 @@
 
 ##v2.0.10 (10/01/2019)
 **Improving code quality** Removing side effects and solving a bug with utilities. The bug didn't have direct effect on functionality.
+
+##v2.0.11 (16/02/2020)
+**Upgrading packages** Getting rid of grunt and clearing up badges
