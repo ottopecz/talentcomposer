@@ -1,5 +1,5 @@
-const {expect} = require("code");
-const Lab = require("lab");
+const {expect} = require("@hapi/code");
+const Lab = require("@hapi/lab");
 const {findWhere, findWhereKey} = require("../lib/util");
 
 const {describe, it} = exports.lab = Lab.script();

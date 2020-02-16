@@ -37,14 +37,14 @@
   },
   "homepage": "https://github.com/ottopecz/talentcomposer#readme",
   "devDependencies": {
-    "code": "^5.2.4",
-    "eslint": "^5.12.0",
-    "grunt": "^1.0.3",
+    "@hapi/code": "^8.0.1",
+    "@hapi/lab": "^22.0.3",
+    "eslint": "^6.8.0",
+    "grunt": "^1.0.4",
     "grunt-coveralls": "^2.0.0",
-    "grunt-eslint": "^21.0.0",
+    "grunt-eslint": "^22.0.0",
     "grunt-shell": "^3.0.1",
-    "lab": "^18.0.1",
-    "load-grunt-tasks": "^4.0.0"
+    "load-grunt-tasks": "^5.1.0"
   },
   "dependencies": {
     "lodash.clone": "^4.5.0"

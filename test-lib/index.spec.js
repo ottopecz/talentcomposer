@@ -1,5 +1,5 @@
-const {expect} = require("code");
-const Lab = require("lab");
+const {expect} = require("@hapi/code");
+const Lab = require("@hapi/lab");
 const Composer = require("../lib/index");
 const Talent = require("../lib/Talent");
 
