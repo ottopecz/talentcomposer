@@ -4,6 +4,5 @@ node_js:
   - "10"
   - "12"
 script:
-  - ./node_modules/.bin/grunt eslint
-  - ./node_modules/.bin/grunt shell:lab
-  - ./node_modules/.bin/grunt coveralls:target
+  - npx eslint lib/**/*.js test-lib/**/*.spec.js
+  - npx lab -I regeneratorRuntime,Observable,__core-js_shared__,core,System,_babelPolyfill,asap -S -r console -m 4000 -o stdout -r lcov -o coverage.info -c --coverage-path lib 'test-lib'
