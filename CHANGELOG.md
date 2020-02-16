@@ -53,3 +53,6 @@
 
 ##v2.0.11 (16/02/2020)
 **Upgrading packages** Getting rid of grunt and clearing up badges
+
+##v2.0.12 (16/02/2020)
+**Fixing build** Fixing build
